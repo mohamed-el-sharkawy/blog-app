@@ -1,1 +1,1 @@
-# posts-app
+# blog-app
