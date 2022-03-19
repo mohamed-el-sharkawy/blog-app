@@ -3,7 +3,7 @@ import { posts } from "../posts";
 
 const router = Router();
 
-router.put("/posts/:postId", (req, res) => {
+router.put("/api/posts/:postId", (req, res) => {
   const content = req.body.content;
   const postId = req.params.postId;
   const id = parseInt(postId);
