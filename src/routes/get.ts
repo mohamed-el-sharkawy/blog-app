@@ -8,7 +8,7 @@ router.get("/api/posts/:id", (req, res) => {
     res.status(404).send("The requested post is not found");
     return;
   }
-  res.send(post);
+  res.status(200).send(post);
 });
 
 export { router as getPostRouter };

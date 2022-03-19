@@ -7,7 +7,7 @@ router.get("/api/posts", (req, res) => {
     res.status(404).send("No posts found");
     return;
   }
-  res.send(posts);
+  res.status(200).send(posts);
 });
 
 export { router as getPostsRouter };
