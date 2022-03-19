@@ -9,7 +9,7 @@ router.put("/posts/:postId", (req, res) => {
   const id = parseInt(postId);
   const found = posts.find((element) => element.id === id);
   if (!found) {
-    res.status(404).send("the post is not found");
+    return res.status(404).send("the post is not found");
   }
   found!.content = content || found!.content;
   res.status(201).send(content);
