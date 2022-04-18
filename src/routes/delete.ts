@@ -1,16 +1,17 @@
 import { Router } from 'express';
+import { Post } from '../models/post';
 import { posts } from '../posts';
 
 const router = Router();
 
-router.delete('/api/posts/:id', (req, res) => {
+router.delete('/api/posts/:postId', async (req, res) => {
   // Check if the post already exists
-  const post = posts.find((post) => post.id === +req.params.id);
+  const { postId } = req.params;
+  const post = await Post.findById(postId);
   if (!post) return res.status(404).send("The requested post doesn't exist.");
 
   // delete the requested post
-  const index = posts.indexOf(post);
-  posts.splice(index, 1);
+  await post.delete();
   res.status(200).send(post);
 });
 

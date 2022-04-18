@@ -1,16 +1,14 @@
 import { Router } from 'express';
-import { posts } from '../posts';
+import { Post } from '../models/post';
+// import { posts } from '../posts';
 
 const router = Router();
 
-router.delete('/api/posts', (req, res) => {
+router.delete('/api/posts', async (req, res) => {
   // Check if there are posts in the array
-  if (!posts.length)
-    return res.status(404).send('There are no posts to delete.');
-
+  const posts = await Post.deleteMany({});
   // delete all posts
-  const deletedPosts = posts.splice(0);
-  res.status(200).send(deletedPosts);
+  res.status(200).send([]);
 });
 
 export { router as deleteAllRouter };
