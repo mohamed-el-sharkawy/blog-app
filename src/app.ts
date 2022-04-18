@@ -1,10 +1,11 @@
 import express from 'express';
 import { postRouter } from './routes/post';
-import { UpdatePostRouter } from "./routes/update_post";
-import { getPostsRouter } from "./routes/get-all";
-import { getPostRouter } from "./routes/get";
+import { UpdatePostRouter } from './routes/put';
+import { getPostsRouter } from './routes/get-all';
+import { getPostRouter } from './routes/get';
 import { deleteRouter } from './routes/delete';
 import { deleteAllRouter } from './routes/delete-all';
+import mongoose from 'mongoose';
 
 const app = express();
 
@@ -16,7 +17,12 @@ app.use(getPostRouter);
 app.use(deleteRouter);
 app.use(deleteAllRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running at localhost:${PORT}`);
-});
+async function run() {
+    await mongoose.connect('mongodb://localhost:27017');
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running at localhost:${PORT}`);
+    });
+}
+
+run();
