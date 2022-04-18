@@ -5,10 +5,9 @@ import { Post } from '../models/post';
 const router = Router();
 
 router.delete('/api/posts', async (req, res) => {
-  // Check if there are posts in the array
-  const posts = await Post.deleteMany({});
+  await Post.deleteMany({});
   // delete all posts
-  res.status(200).send([]);
+  res.status(204);
 });
 
 export { router as deleteAllRouter };
