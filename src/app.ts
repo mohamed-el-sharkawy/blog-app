@@ -24,3 +24,5 @@ async function run() {
         console.log(`Server running at localhost:${PORT}`);
     });
 }
+
+run();
