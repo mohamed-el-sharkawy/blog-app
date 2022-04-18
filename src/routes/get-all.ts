@@ -1,11 +1,8 @@
 import { Router } from "express";
-import { posts } from "../posts";
+import { Post } from "../models/post";
 const router = Router();
-router.get("/api/posts", (req, res) => {
-  if (posts.length === 0) {
-    res.status(200).send([]);
-    return;
-  }
+router.get("/api/posts", async (req, res) => {
+  const posts = await Post.find({});
   res.status(200).send(posts);
 });
 

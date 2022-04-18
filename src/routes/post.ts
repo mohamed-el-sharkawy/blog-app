@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { posts } from '../posts';
-
+import { Post } from '../models/post';
 const router = Router();
 
-router.post('/api/posts', (req, res) => {
+router.post('/api/posts', async (req, res) => {
     const content = req.body.content;
     if (!content) return res.status(400).json({ message: 'Must send content' });
-    posts.push({ id: posts.length + 1, content: content });
-    res.status(201).send(posts[posts.length - 1]);
+    const post = new Post({ content });
+    await post.save();
+    res.status(201).send(post);
 });
 
 export { router as postRouter };

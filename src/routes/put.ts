@@ -1,18 +1,26 @@
 import { Router } from "express";
-import { posts } from "../posts";
+import mongoose from "mongoose";
+import { Post } from "../models/post";
 
 const router = Router();
 
-router.put("/api/posts/:postId", (req, res) => {
+router.put("/api/posts/:postId", async (req, res) => {
   const content = req.body.content;
   const postId = req.params.postId;
-  const id = parseInt(postId);
-  const found = posts.find((element) => element.id === id);
-  if (!found) {
-    return res.status(404).send("the post is not found");
+
+  if (!mongoose.Types.ObjectId.isValid(postId)) {
+    return res.status(400).send("Invalid post id");
   }
-  found!.content = content || found!.content;
-  res.status(201).send(content);
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    return res.status(404).send("The post is not found");
+  }
+  post.content = content || post.content;
+  await post.save();
+
+  return res.status(201).send(post);
 });
 
 export { router as UpdatePostRouter };
