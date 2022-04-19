@@ -4,14 +4,14 @@ interface IComment {
     content: string;
     postId: mongoose.Types.ObjectId;
 }
-const commentSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema<IComment>(
     {
         content: {
             type: String,
             required: true,
         },
         postId: {
-            type: mongoose.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
     },
