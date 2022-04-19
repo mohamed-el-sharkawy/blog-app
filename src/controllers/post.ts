@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Post } from "../models/post";
+import { Comment } from "../models/comment";
 import mongoose from "mongoose";
 
 const createPost = async (req: Request, res: Response) => {
@@ -34,11 +35,12 @@ const getPost = async (req: Request, res: Response) => {
     return res.status(400).send("Invalid post id");
   }
   const post = await Post.findById(postId);
+  const comments = await Comment.find({ postId: postId });
   if (!post) {
     res.status(404).send("The requested post is not found");
     return;
   }
-  res.status(200).send(post);
+  res.status(200).send({ post: post, comments: comments });
 };
 const getPosts = async (req: Request, res: Response) => {
   const posts = await Post.find({});
