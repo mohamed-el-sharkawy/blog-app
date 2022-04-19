@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
-const postSchema = new mongoose.Schema(
+interface IPost {
+    content: string;
+}
+const postSchema = new mongoose.Schema<IPost>(
     {
         content: {
             type: String,

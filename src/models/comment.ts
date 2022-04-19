@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+interface IComment {
+    content: string;
+    postId: mongoose.Types.ObjectId;
+}
 const commentSchema = new mongoose.Schema(
     {
         content: {
