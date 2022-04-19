@@ -40,8 +40,7 @@ const getPost = async (req: Request, res: Response) => {
     res.status(404).send("The requested post is not found");
     return;
   }
-  const response = {...post,comments};
-  res.status(200).send(response);
+  res.status(200).send({ post: post, comments: comments });
 };
 const getPosts = async (req: Request, res: Response) => {
   const posts = await Post.find({});
