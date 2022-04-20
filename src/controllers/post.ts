@@ -43,7 +43,16 @@ const getPost = async (req: Request, res: Response) => {
     res.status(200).send({ ...post.toObject(), comments });
 };
 const getPosts = async (req: Request, res: Response) => {
-    const posts = await Post.find({});
+    const posts = await Post.aggregate([
+        {
+            $lookup: {
+                from: 'comments',
+                localField: '_id',
+                foreignField: 'postId',
+                as: 'comments',
+            },
+        },
+    ]);
     res.status(200).send(posts);
 };
 

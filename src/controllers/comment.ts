@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Comment } from '../models/comment';
+import { Post } from '../models/post';
 
 const createComment = async (req: Request, res: Response) => {
     const postId = req.params.postId;
@@ -21,7 +22,7 @@ const updateComment = async (req: Request, res: Response) => {
         return res.status(400).send('Invalid comment id');
     }
     const comment = await Comment.findById(commentId);
-
+    if (!comment) return res.status(404).send('Comment not found');
     if (comment.postId.toString() !== postId) {
         return res.status(400).send('Invalid post');
     }
@@ -56,4 +57,23 @@ const getComment = async (req: Request, res: Response) => {
     }
     res.status(200).send(comment);
 };
-export { createComment, updateComment, getComments, getComment };
+
+const deleteComment = async (req: Request, res: Response) => {
+    const { postId, commentId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+        return res.status(400).send('Invalid post id');
+    }
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
+        return res.status(400).send('Invalid comment id');
+    }
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).send("The requested post doesn't exist.");
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+        return res.status(404).send("The requested comment doesn't exist.");
+    }
+    await comment.delete();
+    res.status(204).send(comment);
+};
+
+export { createComment, updateComment, getComments, getComment, deleteComment };
