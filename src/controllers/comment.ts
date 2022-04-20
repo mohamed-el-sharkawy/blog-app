@@ -33,15 +33,6 @@ const updateComment = async (req: Request, res: Response) => {
     res.status(201).send(comment);
 };
 
-const getComments = async (req: Request, res: Response) => {
-    const { postId } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-        return res.status(400).send('Invalid post id');
-    }
-    const comments = await Comment.find({ postId: postId });
-    res.status(200).send(comments);
-};
-
 const getComment = async (req: Request, res: Response) => {
     const { postId, commentId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(postId)) {
@@ -56,6 +47,15 @@ const getComment = async (req: Request, res: Response) => {
         return;
     }
     res.status(200).send(comment);
+};
+
+const getComments = async (req: Request, res: Response) => {
+    const { postId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+        return res.status(400).send('Invalid post id');
+    }
+    const comments = await Comment.find({ postId: postId });
+    res.status(200).send(comments);
 };
 
 const deleteComment = async (req: Request, res: Response) => {
@@ -76,4 +76,22 @@ const deleteComment = async (req: Request, res: Response) => {
     res.status(204).send(comment);
 };
 
-export { createComment, updateComment, getComments, getComment, deleteComment };
+const deleteComments = async (req: Request, res: Response) => {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).send("The requested post doesn't exist.");
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+        return res.status(400).send('Invalid post id');
+    }
+    await Comment.deleteMany({ postId });
+    res.status(204).send();
+};
+
+export {
+    createComment,
+    updateComment,
+    getComment,
+    getComments,
+    deleteComment,
+    deleteComments,
+};
