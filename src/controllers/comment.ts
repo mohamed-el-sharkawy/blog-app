@@ -5,8 +5,11 @@ import { Post } from '../models/post';
 
 const createComment = async (req: Request, res: Response) => {
     const postId = req.params.postId;
+    if (!mongoose.Types.ObjectId.isValid(postId))
+        return res.status(400).send({ error: 'Invalid post id' });
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).send({ message: 'Post not found' });
     const { content } = req.body;
-    console.log({ content });
     const comment = new Comment({ content, postId });
     await comment.save();
     res.status(201).send(comment);
