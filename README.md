@@ -8,11 +8,12 @@ Heroku deployment link: [https://sfe-blog-app.herokuapp.com](https://sfe-blog-ap
 
 ## Routes:
 
-| Route              | Method | Body                     | Description       |
-| ------------------ | ------ | ------------------------ | ----------------- |
-| /api/posts         | POST   | {"content": "anything" } | Creates a post    |
-| /api/posts/:postId | Put    | {"content": "anything" } | Updates a post    |
-| /api/posts         | GET    | {}                       | Gets posts        |
-| /api/posts/:postId | GET    | {}                       | Gets a post       |
-| /api/posts         | DELETE |                          | Deletes all posts |
-| /api/posts/:postId | DELETE |                          | Deletes a post    |
+| Route                       | Method | Body                     | Description       |
+| --------------------------- | ------ | ------------------------ | ----------------- |
+| /api/posts                  | POST   | {"content": "anything" } | Creates a post    |
+| /api/posts/:postId          | Put    | {"content": "anything" } | Updates a post    |
+| /api/posts                  | GET    | {}                       | Gets posts        |
+| /api/posts/:postId          | GET    | {}                       | Gets a post       |
+| /api/posts                  | DELETE |                          | Deletes all posts |
+| /api/posts/:postId          | DELETE |                          | Deletes a post    |
+| /api/posts/:postId/comments | POST   | {"content": "anything" } | Creates a comment |
