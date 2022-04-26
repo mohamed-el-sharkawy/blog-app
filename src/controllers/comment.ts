@@ -30,8 +30,9 @@ const updateComment = async (req: Request, res: Response) => {
     }
     const comment = await Comment.findById(commentId);
     if (!comment) return res.status(404).send('Comment not found');
-    if (comment.postId.toString() !== postId) {
-        return res.status(400).send('Invalid post');
+
+    if (!comment.postId.equals(postId)) {
+        return res.status(400).send('Invalid post id or comment id');
     }
 
     comment.content = content || comment.content;
@@ -42,18 +43,21 @@ const updateComment = async (req: Request, res: Response) => {
 
 const getComment = async (req: Request, res: Response) => {
     const { postId, commentId } = req.params;
-    const post = await Post.findById(postId);
-    if (!post) return res.status(404).send("The requested post doesn't exist.");
     if (!mongoose.Types.ObjectId.isValid(postId)) {
         return res.status(400).send('Invalid post id');
     }
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).send("The requested post doesn't exist.");
     if (!mongoose.Types.ObjectId.isValid(commentId)) {
         return res.status(400).send('Invalid comment id');
     }
     const comment = await Comment.findById(commentId);
-    if (!comment || comment.postId.equals(postId)) {
+    if (!comment) {
         res.status(404).send('The requested comment is not found');
         return;
+    }
+    if (!comment.postId.equals(postId)) {
+        return res.status(400).send('Invalid post id or comment id');
     }
     res.status(200).send(comment);
 };
