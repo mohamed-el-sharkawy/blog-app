@@ -12,3 +12,6 @@ Heroku deployment link: [https://sfe-blog-app.herokuapp.com](https://sfe-blog-ap
 | ------------------ | ------ | ------------------------ | -------------- |
 | /api/posts         | POST   | {"content": "anything" } | Creates a post |
 | /api/posts/:postId | Put    | {"content": "anything" } | Updates a post |
+| /api/posts         | GET    |           {}             | Gets posts     |
+| /api/posts/:postId | GET    |           {}             | Gets a post    |
+ 
