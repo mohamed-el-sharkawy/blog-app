@@ -8,6 +8,7 @@ Heroku deployment link: [https://sfe-blog-app.herokuapp.com](https://sfe-blog-ap
 
 ## Routes:
 
-| Route      | Method | Body                     | Description    |
-| ---------- | ------ | ------------------------ | -------------- |
-| /api/posts | POST   | {"content": "anything" } | Creates a post |
+| Route              | Method | Body                     | Description    |
+| ------------------ | ------ | ------------------------ | -------------- |
+| /api/posts         | POST   | {"content": "anything" } | Creates a post |
+| /api/posts/:postId | Put    | {"content": "anything" } | Updates a post |
