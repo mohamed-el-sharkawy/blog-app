@@ -1,1 +1,7 @@
 # blog-app
+
+A blog app API where people can create posts and comments
+
+Docker image link: [https://hub.docker.com/repository/docker/mohamedelsharkawy/blog](https://hub.docker.com/repository/docker/mohamedelsharkawy/blog).
+
+Heroku deployment link: [https://sfe-blog-app.herokuapp.com](https://sfe-blog-app.herokuapp.com)
